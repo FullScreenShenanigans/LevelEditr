@@ -16,6 +16,10 @@ declare module LevelEditr {
         addThing(thing: IThing, x?: number, y?: number): IThing;
         createElement(tag: "a", ...args: any[]): HTMLLinkElement;
         createElement(tag: "div", ...args: any[]): HTMLDivElement;
+        createElement(tag: "h1", ...args: any[]): HTMLHeadingElement;
+        createElement(tag: "h2", ...args: any[]): HTMLHeadingElement;
+        createElement(tag: "h3", ...args: any[]): HTMLHeadingElement;
+        createElement(tag: "h4", ...args: any[]): HTMLHeadingElement;
         createElement(tag: "input", ...args: any[]): HTMLInputElement;
         createElement(tag: "select", ...args: any[]): HTMLSelectElement;
         createElement(tag: string, ...args: any[]): HTMLElement;
