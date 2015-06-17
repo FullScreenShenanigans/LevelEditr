@@ -35,7 +35,8 @@ module LevelEditr {
     "use strict";
 
     /**
-     * A GameStartr module to let the user edit levels. Etc. etc.
+     * A level editor designed to work natively on top of an existing GameStartr
+     * sub-class.
      */
     export class LevelEditr implements ILevelEditr {
         // The container game object to store Thing and map information
@@ -1303,10 +1304,10 @@ module LevelEditr {
                             }),
                             this.display.sections.MapSettings.Time = this.createSelect(
                                 [
-                                    "100", "200", "300", "400", "500", "1000", "2000", "Infinity"
+                                    "100", "200", "300", "400", "500", "1000", "Infinity"
                                 ],
                                 {
-                                    "value": "Infinity",
+                                    "value": this.mapTimeDefault.toString(),
                                     "onchange": this.setMapTime.bind(this, true)
                                 })
                         ]
