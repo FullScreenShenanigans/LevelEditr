@@ -684,11 +684,11 @@ module LevelEditr {
                 labeler = <HTMLDivElement>child.querySelector(".VisualOptionLabel");
                 valuer = <HTMLInputElement>child.querySelector(".VisualOptionValue");
 
-                switch (valuer.getAttribute("data:type")) {
-                    case "Boolean":
+                switch ((valuer.getAttribute("data:type") || valuer.type).toLowerCase()) {
+                    case "boolean":
                         value = valuer.value === "true" ? true : false;
                         break;
-                    case "Number":
+                    case "number":
                         value = (Number(valuer.value) || 0) * (Number(valuer.getAttribute("data:mod")) || 1);
                         break;
                     default:
@@ -1055,9 +1055,9 @@ module LevelEditr {
                 "container": this.GameStarter.createElement("div", {
                     "className": "LevelEditor",
                     "onclick": this.cancelEvent.bind(this),
-                    "ondragenter": this.handleDragEnter,
-                    "ondragover": this.handleDragOver,
-                    "ondrop": this.handleDragDrop
+                    "ondragenter": this.handleDragEnter.bind(this),
+                    "ondragover": this.handleDragOver.bind(this),
+                    "ondrop": this.handleDragDrop.bind(this)
                 }),
                 "scrollers": {},
                 "stringer": {},
