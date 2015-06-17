@@ -82,6 +82,7 @@ declare module LevelEditr {
             "left": HTMLDivElement;
             "right": HTMLDivElement;
         };
+        "gui": HTMLDivElement;
         "head": HTMLDivElement;
         "namer": HTMLInputElement;
         "minimizer": HTMLDivElement;
@@ -149,5 +150,6 @@ declare module LevelEditr {
         downloadCurrentJSON(): void;
         setCurrentJSON(json: string): void;
         loadCurrentJSON(): void;
+        handleUploadCompletion(event: IDataProgressEvent): void;
     }
 }

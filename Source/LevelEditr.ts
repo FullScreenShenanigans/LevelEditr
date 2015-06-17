@@ -1,17 +1,35 @@
-/// <reference path="References/ChangeLinr.d.ts" />
-/// <reference path="References/GroupHoldr.d.ts" />
-/// <reference path="References/InputWritr.d.ts" />
-/// <reference path="References/MapsCreatr.d.ts" />
-/// <reference path="References/MapScreenr.d.ts" />
-/// <reference path="References/MapsHandlr.d.ts" />
-/// <reference path="References/ObjectMakr.d.ts" />
-/// <reference path="References/PixelDrawr.d.ts" />
-/// <reference path="References/PixelRendr.d.ts" />
-/// <reference path="References/QuadsKeepr.d.ts" />
-/// <reference path="References/StringFilr.d.ts" />
-/// <reference path="References/StatsHoldr.d.ts" />
-/// <reference path="References/TimeHandlr.d.ts" />
+// @echo '/// <reference path="ChangeLinr-0.2.0.ts" />'
+// @echo '/// <reference path="GroupHoldr-0.2.1.ts" />'
+// @echo '/// <reference path="InputWritr-0.2.0.ts" />'
+// @echo '/// <reference path="MapsCreatr-0.2.1.ts" />'
+// @echo '/// <reference path="MapScreenr-0.2.1.ts" />'
+// @echo '/// <reference path="MapsHandlr-0.2.0.ts" />'
+// @echo '/// <reference path="ObjectMakr-0.2.2.ts" />'
+// @echo '/// <reference path="PixelDrawr-0.2.0.ts" />'
+// @echo '/// <reference path="PixelRendr-0.2.0.ts" />'
+// @echo '/// <reference path="QuadsKeepr-0.2.1.ts" />'
+// @echo '/// <reference path="StatsHoldr-0.2.1.ts" />'
+// @echo '/// <reference path="StringFilr-0.2.1.ts" />'
+// @echo '/// <reference path="TimeHandlr-0.2.0.ts" />'
+
+// @ifdef INCLUDE_DEFINITIONS
+/// <reference path="References/ChangeLinr-0.2.0.ts" />
+/// <reference path="References/GroupHoldr-0.2.1.ts" />
+/// <reference path="References/InputWritr-0.2.0.ts" />
+/// <reference path="References/MapsCreatr-0.2.1.ts" />
+/// <reference path="References/MapScreenr-0.2.1.ts" />
+/// <reference path="References/MapsHandlr-0.2.0.ts" />
+/// <reference path="References/ObjectMakr-0.2.2.ts" />
+/// <reference path="References/PixelDrawr-0.2.0.ts" />
+/// <reference path="References/PixelRendr-0.2.0.ts" />
+/// <reference path="References/QuadsKeepr-0.2.1.ts" />
+/// <reference path="References/StatsHoldr-0.2.1.ts" />
+/// <reference path="References/StringFilr-0.2.1.ts" />
+/// <reference path="References/TimeHandlr-0.2.0.ts" />
 /// <reference path="LevelEditr.d.ts" />
+// @endif
+
+// @include ../Source/LevelEditr.d.ts
 
 module LevelEditr {
     "use strict";
@@ -273,6 +291,8 @@ module LevelEditr {
                 this.GameStarter.addPageStyles(this.createPageStyles());
                 this.pageStylesAdded = true;
             }
+
+            this.GameStarter.container.insertBefore(this.display.container, this.GameStarter.container.children[0]);
         }
 
         /**
@@ -303,7 +323,7 @@ module LevelEditr {
          */
         maximize(): void {
             this.display.minimizer.innerText = "-";
-            this.display.minimizer.onclick = this.minimize;
+            this.display.minimizer.onclick = this.minimize.bind(this);
 
             if (this.display.container.className.indexOf("minimized") !== -1) {
                 this.display.container.className = this.display.container.className.replace(/ minimized/g, "");
@@ -336,7 +356,8 @@ module LevelEditr {
          * 
          */
         downloadCurrentJSON(): void {
-            this.downloadFile(this.getMapName() + ".json", this.display.stringer.textarea.value || "");
+            var link: HTMLLinkElement = this.downloadFile(this.getMapName() + ".json", this.display.stringer.textarea.value || "");
+            window.open(link.href);
         }
 
         /**
@@ -358,6 +379,15 @@ module LevelEditr {
 
         /* Interactivity
         */
+
+        /**
+         * 
+         */
+        handleUploadCompletion(event: IDataProgressEvent): void {
+            this.enable();
+            this.setCurrentJSON(event.currentTarget.result);
+            this.setSectionJSON();
+        }
 
         /**
          * 
@@ -386,12 +416,14 @@ module LevelEditr {
                     "yloc": 0,
                     "thing": this.GameStarter.ObjectMaker.make(
                         this.currentTitle,
-                        this.GameStarter.proliferate({
-                            "onThingMake": undefined,
-                            "onThingAdd": undefined,
-                            "onThingAdded": undefined,
-                            "outerok": true
-                        }, this.getNormalizedThingArguments(args))
+                        this.GameStarter.proliferate(
+                            {
+                                "onThingMake": undefined,
+                                "onThingAdd": undefined,
+                                "onThingAdded": undefined,
+                                "outerok": true
+                            },
+                            this.getNormalizedThingArguments(args))
                         )
                 }
             ];
@@ -437,19 +469,22 @@ module LevelEditr {
 
             target.setAttribute("scrolling", "1");
 
-            this.GameStarter.TimeHandler.addEventInterval(function (): boolean | void {
-                if (target.getAttribute("scrolling") !== "1") {
-                    return true;
-                }
+            this.GameStarter.TimeHandler.addEventInterval(
+                function (): boolean | void {
+                    if (target.getAttribute("scrolling") !== "1") {
+                        return true;
+                    }
 
-                if (direction < 0 && scope.GameStarter.MapScreener.left <= 0) {
-                    (scope.display.scrollers.left).style.opacity = "0";
-                    return;
-                }
+                    if (direction < 0 && scope.GameStarter.MapScreener.left <= 0) {
+                        (scope.display.scrollers.left).style.opacity = "0";
+                        return;
+                    }
 
-                scope.GameStarter.scrollWindow(direction);
-                scope.display.scrollers.left.style.opacity = "1";
-            }, 1, Infinity);
+                    scope.GameStarter.scrollWindow(direction);
+                    scope.display.scrollers.left.style.opacity = "1";
+                },
+                1,
+                Infinity);
         }
 
         /**
@@ -543,12 +578,14 @@ module LevelEditr {
         private onClickEditingGenericAdd(x: number, y: number, title: string, args: any): void {
             var thing: IThing = this.GameStarter.ObjectMaker.make(
                 title,
-                this.GameStarter.proliferate({
-                    "onThingMake": undefined,
-                    "onThingAdd": undefined,
-                    "onThingAdded": undefined,
-                    "movement": undefined
-                }, this.getNormalizedThingArguments(args)));
+                this.GameStarter.proliferate(
+                    {
+                        "onThingMake": undefined,
+                        "onThingAdd": undefined,
+                        "onThingAdded": undefined,
+                        "movement": undefined
+                    },
+                    this.getNormalizedThingArguments(args)));
 
             if (this.currentMode === "Build") {
                 this.disableThing(thing, .7);
@@ -557,8 +594,7 @@ module LevelEditr {
             this.GameStarter.addThing(
                 thing,
                 this.roundTo(x - this.GameStarter.container.offsetLeft, this.blocksize),
-                this.roundTo(y - this.GameStarter.container.offsetTop, this.blocksize)
-                );
+                this.roundTo(y - this.GameStarter.container.offsetTop, this.blocksize));
         }
 
         /**
@@ -568,13 +604,14 @@ module LevelEditr {
             var x: number = event.x || event.clientX || 0,
                 y: number = event.y || event.clientY || 0,
                 target: IThingIcon = (<HTMLDivElement>event.target).nodeName === "DIV"
-                    ? <IThingIcon>event.target : <IThingIcon>(<HTMLElement>event.target).parentNode;
+                    ? <IThingIcon>event.target : <IThingIcon>(<HTMLElement>event.target).parentNode,
+                scope: LevelEditr = this;
 
             this.cancelEvent(event);
             this.killCurrentPreThings();
 
             setTimeout(function (): void {
-                this.setCurrentThing(title, this.getCurrentArgs(), x, y);
+                scope.setCurrentThing(title, scope.getCurrentArgs(), x, y);
             });
 
             this.setVisualOptions(target.getAttribute("name"), undefined, target.options);
@@ -596,9 +633,11 @@ module LevelEditr {
 
             this.currentPreThings = [];
             this.GameStarter.MapsCreator.analyzePreMacro(
-                this.GameStarter.proliferate({
-                    "macro": title
-                }, this.generateCurrentArgs()),
+                this.GameStarter.proliferate(
+                    {
+                        "macro": title
+                    },
+                    this.generateCurrentArgs()),
                 this.createPrethingsHolder(this.currentPreThings),
                 this.getCurrentAreaObject(map),
                 map
@@ -643,7 +682,7 @@ module LevelEditr {
             for (i = 0; i < children.length; i += 1) {
                 child = <HTMLDivElement>children[i];
                 labeler = <HTMLDivElement>child.querySelector(".VisualOptionLabel");
-                valuer = <any>child.querySelector("VisualOptionValue");
+                valuer = <HTMLInputElement>child.querySelector(".VisualOptionValue");
 
                 switch (valuer.getAttribute("data:type")) {
                     case "Boolean":
@@ -967,11 +1006,13 @@ module LevelEditr {
          */
         private addMapCreationThing(x: number, y: number): boolean {
             var mapObject: IMapsCreatrMapRaw = this.getMapObject(),
-                thingRaw: IPreThing = this.GameStarter.proliferate({
-                    "thing": this.currentTitle,
-                    "x": this.getNormalizedX(x) + (this.GameStarter.MapScreener.left / this.GameStarter.unitsize),
-                    "y": this.getNormalizedY(y)
-                }, this.currentArgs);
+                thingRaw: IPreThing = this.GameStarter.proliferate(
+                    {
+                        "thing": this.currentTitle,
+                        "x": this.getNormalizedX(x) + (this.GameStarter.MapScreener.left / this.GameStarter.unitsize),
+                        "y": this.getNormalizedY(y)
+                    },
+                    this.currentArgs);
 
             if (!mapObject) {
                 return false;
@@ -986,11 +1027,13 @@ module LevelEditr {
 
         private addMapCreationMacro(x: number, y: number): boolean {
             var mapObject: IMapsCreatrMapRaw = this.getMapObject(),
-                macroRaw: any = this.GameStarter.proliferate({
-                    "macro": this.currentTitle,
-                    "x": this.getNormalizedX(x) + (this.GameStarter.MapScreener.left / this.GameStarter.unitsize),
-                    "y": this.getNormalizedY(y)
-                }, this.generateCurrentArgs());
+                macroRaw: any = this.GameStarter.proliferate(
+                    {
+                        "macro": this.currentTitle,
+                        "x": this.getNormalizedX(x) + (this.GameStarter.MapScreener.left / this.GameStarter.unitsize),
+                        "y": this.getNormalizedY(y)
+                    },
+                    this.generateCurrentArgs());
 
             if (!mapObject) {
                 return false;
@@ -1008,19 +1051,41 @@ module LevelEditr {
         */
 
         private resetDisplay(): void {
-            this.display.container = this.GameStarter.createElement("div", {
-                "className": "LevelEditor",
-                "onclick": this.cancelEvent.bind(this),
-                "ondragenter": this.handleDragEnter,
-                "ondragover": this.handleDragOver,
-                "ondrop": this.handleDragDrop
-            });
+            this.display = <any>{
+                "container": this.GameStarter.createElement("div", {
+                    "className": "LevelEditor",
+                    "onclick": this.cancelEvent.bind(this),
+                    "ondragenter": this.handleDragEnter,
+                    "ondragover": this.handleDragOver,
+                    "ondrop": this.handleDragDrop
+                }),
+                "scrollers": {},
+                "stringer": {},
+                "sections": {
+                    "ClickToPlace": {},
+                    "MapSettings": {
+                        "Setting": {}
+                    },
+                    "buttons": {
+                        "ClickToPlace": {}
+                    }
+                }
+            };
 
             this.resetDisplayScrollers();
+            this.resetDisplayGui();
             this.resetDisplayHead();
             this.resetDisplaySectionChoosers();
             this.resetDisplayOptionsList();
             this.resetDisplayMapSettings();
+        }
+
+        private resetDisplayGui(): void {
+            this.display.gui = this.GameStarter.createElement("div", {
+                "className": "EditorGui"
+            });
+
+            this.display.container.appendChild(this.display.gui);
         }
 
         private resetDisplayScrollers(): void {
@@ -1059,6 +1124,8 @@ module LevelEditr {
 
             this.display.scrollers.container.appendChild(this.display.scrollers.left);
             this.display.scrollers.container.appendChild(this.display.scrollers.right);
+
+            this.display.container.appendChild(this.display.scrollers.container);
         }
 
         private resetDisplayHead(): void {
@@ -1093,7 +1160,7 @@ module LevelEditr {
                 ]
             });
 
-            this.display.container.appendChild(this.display.head);
+            this.display.gui.appendChild(this.display.head);
         }
 
         private resetDisplaySectionChoosers(): void {
@@ -1128,7 +1195,7 @@ module LevelEditr {
                 ]
             });
 
-            this.display.container.appendChild(sectionChoosers);
+            this.display.gui.appendChild(sectionChoosers);
         }
 
         private resetDisplayOptionsList(): void {
@@ -1143,33 +1210,35 @@ module LevelEditr {
             this.resetDisplayOptionsListSubOptionsMenu();
             this.resetDisplayOptionsListSubOptions();
 
-            this.display.container.appendChild(this.display.sections.ClickToPlace.container);
+            this.display.gui.appendChild(this.display.sections.ClickToPlace.container);
         }
 
         private resetDisplayOptionsListSubOptionsMenu(): void {
-            this.display.sections.ClickToPlace.container = this.GameStarter.createElement("div", {
-                "className": "EditorSubOptionsListsMenu",
-                "children": [
-                    this.display.sections.buttons.ClickToPlace.Things = this.GameStarter.createElement("div", {
-                        "className": "EditorMenuOption EditorSubOptionsListChooser EditorMenuOptionHalf",
-                        "textContent": "Things",
-                        "onclick": this.setSectionClickToPlaceThings.bind(this),
-                        "style": {
-                            "background": "#CCC"
-                        }
-                    }),
-                    this.display.sections.buttons.ClickToPlace.Macros = this.GameStarter.createElement("div", {
-                        "className": "EditorMenuOption EditorSubOptionsListChooser EditorMenuOptionHalf",
-                        "textContent": "Macros",
-                        "onclick": this.setSectionClickToPlaceMacros.bind(this),
-                        "style": {
-                            "background": "#777"
-                        }
-                    })
-                ]
+            var holder: HTMLDivElement = this.GameStarter.createElement("div", {
+                "className": "EditorSubOptionsListsMenu"
             });
 
-            this.display.sections.ClickToPlace.container.appendChild(this.display.sections.ClickToPlace.container);
+            this.display.sections.buttons.ClickToPlace.Things = this.GameStarter.createElement("div", {
+                "className": "EditorMenuOption EditorSubOptionsListChooser EditorMenuOptionHalf",
+                "textContent": "Things",
+                "onclick": this.setSectionClickToPlaceThings.bind(this),
+                "style": {
+                    "background": "#CCC"
+                }
+            });
+
+            this.display.sections.buttons.ClickToPlace.Macros = this.GameStarter.createElement("div", {
+                "className": "EditorMenuOption EditorSubOptionsListChooser EditorMenuOptionHalf",
+                "textContent": "Macros",
+                "onclick": this.setSectionClickToPlaceMacros.bind(this),
+                "style": {
+                    "background": "#777"
+                }
+            });
+
+            holder.appendChild(this.display.sections.buttons.ClickToPlace.Things);
+            holder.appendChild(this.display.sections.buttons.ClickToPlace.Macros);
+            this.display.sections.ClickToPlace.container.appendChild(holder);
         }
 
         private resetDisplayMapSettings(): void {
@@ -1200,7 +1269,7 @@ module LevelEditr {
             this.resetDisplayVisualContainers();
             this.resetDisplayButtons();
 
-            this.display.container.appendChild(this.display.sections.MapSettings.container);
+            this.display.gui.appendChild(this.display.sections.MapSettings.container);
         }
 
         private resetDisplayMapSettingsCurrent(): void {
@@ -1235,7 +1304,8 @@ module LevelEditr {
                             this.display.sections.MapSettings.Time = this.createSelect(
                                 [
                                     "100", "200", "300", "400", "500", "1000", "2000", "Infinity"
-                                ], {
+                                ],
+                                {
                                     "value": "Infinity",
                                     "onchange": this.setMapTime.bind(this, true)
                                 })
@@ -1302,7 +1372,8 @@ module LevelEditr {
                             this.display.sections.MapSettings.Entry = this.createSelect(
                                 [
                                     "Plain", "Normal", "Castle", "PipeVertical", "PipeHorizontal"
-                                ], {
+                                ],
+                                {
                                     "onchange": this.setMapEntry.bind(this, true)
                                 })
                         ]
@@ -1331,7 +1402,7 @@ module LevelEditr {
                 ]
             });
 
-            this.display.container.appendChild(this.display.sections.JSON);
+            this.display.gui.appendChild(this.display.sections.JSON);
         }
 
         private resetDisplayVisualContainers(): void {
@@ -1349,14 +1420,14 @@ module LevelEditr {
                 }
             });
 
-            this.display.container.appendChild(this.display.sections.ClickToPlace.VisualSummary);
-            this.display.container.appendChild(this.display.sections.ClickToPlace.VisualOptions);
+            this.display.gui.appendChild(this.display.sections.ClickToPlace.VisualSummary);
+            this.display.gui.appendChild(this.display.sections.ClickToPlace.VisualOptions);
         }
 
         private resetDisplayButtons(): void {
             var scope: LevelEditr = this;
 
-            this.display.container.appendChild(this.GameStarter.createElement("div", {
+            this.display.gui.appendChild(this.GameStarter.createElement("div", {
                 "className": "EditorMenu",
                 "onclick": this.cancelEvent.bind(this),
                 "children": (function (actions: any): HTMLDivElement[] {
@@ -1402,7 +1473,9 @@ module LevelEditr {
          * this.onThingIconClick on the Thing's title.
          */
         private resetDisplayOptionsListSubOptionsThings(): void {
-            var scope: LevelEditr = this;
+            var scope: LevelEditr = this,
+                // Without clicker, tslint complaints onThingIconClick isn't used...
+                clicker: any = this.onThingIconClick;
 
             this.display.sections.ClickToPlace.Things = this.GameStarter.createElement("div", {
                 "className": "EditorSectionSecondary EditorOptions EditorOptions-Things",
@@ -1420,7 +1493,7 @@ module LevelEditr {
                                             "name": title,
                                             "options": scope.prethings[key][title],
                                             "children": [thing.canvas],
-                                            "onclick": scope.onThingIconClick.bind(scope, title)
+                                            "onclick": clicker.bind(scope, title)
                                         }),
                                         sizeMax: number = 70,
                                         widthThing: number = thing.width * scope.GameStarter.unitsize,
@@ -1446,7 +1519,7 @@ module LevelEditr {
                                 "children": children
                             });
                         }),
-                        switcher: HTMLSelectElement = scope.createSelect(Object.keys(this.things), {
+                        switcher: HTMLSelectElement = scope.createSelect(Object.keys(scope.prethings), {
                             "className": "EditorOptionContainerSwitchers",
                             "onchange": function (): void {
                                 containers[selectedIndex + 1].style.display = "none";
@@ -1461,6 +1534,8 @@ module LevelEditr {
                     return containers;
                 })()
             });
+
+            this.display.sections.ClickToPlace.container.appendChild(this.display.sections.ClickToPlace.Things);
         }
 
         /**
@@ -1468,26 +1543,30 @@ module LevelEditr {
          * this.onMacroIconClick on the macro's title, description, and options.
          */
         private resetDisplayOptionsListSubOptionsMacros(): void {
-            this.display.sections.ClickToPlace.Macros = this.GameStarter.createElement("div", {
+            var scope: LevelEditr = this;
+
+            scope.display.sections.ClickToPlace.Macros = scope.GameStarter.createElement("div", {
                 "className": "EditorSectionSecondary EditorOptions EditorOptions-Macros",
                 "style": {
                     "display": "none"
                 },
-                "children": Object.keys(this.macros).map(function (key: string): HTMLDivElement {
-                    var macro: any = this.macros[key];
+                "children": Object.keys(scope.macros).map(function (key: string): HTMLDivElement {
+                    var macro: any = scope.macros[key];
 
-                    return this.GameStarter.createElement("div", {
+                    return scope.GameStarter.createElement("div", {
                         "className": "EditorOptionContainer",
                         "children": [
-                            this.GameStarter.createElement("div", {
+                            scope.GameStarter.createElement("div", {
                                 "className": "EditorOptionTitle EditorMenuOption",
                                 "textContent": key,
-                                "onclick": this.onMacroIconClick.bind(this, key, macro.description, macro.options)
+                                "onclick": scope.onMacroIconClick.bind(scope, key, macro.description, macro.options)
                             })
                         ]
                     });
                 })
             });
+
+            this.display.sections.ClickToPlace.container.appendChild(this.display.sections.ClickToPlace.Macros);
         }
 
         /**
@@ -1582,6 +1661,8 @@ module LevelEditr {
          */
         private setVisualOptions(name: string, description: string, options: any): void {
             var visual: HTMLDivElement = this.display.sections.ClickToPlace.VisualOptions,
+                // Without clicker, tslint complains createVisualOption isn't being used...
+                clicker: any = this.createVisualOption.bind(this),
                 scope: LevelEditr = this;
 
             visual.textContent = "";
@@ -1609,7 +1690,7 @@ module LevelEditr {
                                     "className": "VisualOptionLabel",
                                     "textContent": key
                                 }),
-                                scope.createVisualOption(options[key])
+                                clicker(options[key])
                             ]
                         });
                     })
@@ -1653,24 +1734,24 @@ module LevelEditr {
             var option: any;
 
             // If the option isn't already an Object, make it one
-            switch (option.constructor) {
+            switch (optionRaw.constructor) {
                 case Number:
                     option = {
                         "type": "Number",
-                        "mod": option
+                        "mod": optionRaw
                     };
                     break;
 
                 case String:
                     option = {
-                        "type": option
+                        "type": optionRaw
                     };
                     break;
 
                 case Array:
                     option = {
                         "type": "Select",
-                        "options": option
+                        "options": optionRaw
                     };
                     break;
 
@@ -1712,7 +1793,8 @@ module LevelEditr {
                                 "type": "Number",
                                 "data:type": "Number",
                                 "value": (option.value === undefined) ? 1 : option.value
-                            }, {
+                            },
+                            {
                                 "className": "VisualOptionValue modReal" + modReal,
                                 "onchange": scope.setCurrentArgs.bind(scope)
                             }),
@@ -1978,7 +2060,7 @@ module LevelEditr {
                         scope.disableThing(thing);
                     });
                 }
-            };
+            }
 
             this.GameStarter.StatsHolder.setItem("time", Infinity);
         }
@@ -1997,7 +2079,7 @@ module LevelEditr {
                         scope.GameStarter.killNormal(thing);
                     });
                 }
-            };
+            }
         }
 
         /**
@@ -2132,15 +2214,6 @@ module LevelEditr {
         /**
          * 
          */
-        private handleUploadCompletion(event: IDataProgressEvent): void {
-            this.enable();
-            this.setCurrentJSON(event.currentTarget.result);
-            this.setSectionJSON();
-        }
-
-        /**
-         * 
-         */
         private cancelEvent(event: Event): void {
             if (!event) {
                 return;
@@ -2181,6 +2254,20 @@ module LevelEditr {
                     "padding": "3px 7px",
                     "font-size": "1.17em"
                 },
+                // EditorGUI & EditorScrollers
+                ".LevelEditor .EditorGui": {
+                    "position": "absolute",
+                    "top": "0",
+                    "right": "0",
+                    "bottom": "0",
+                    "width": "50%",
+                    "background": "rgba(0, 7, 14, .84)",
+                    "overflow": "hidden",
+                    "user-select": "none",
+                    "box-sizing": "border-box",
+                    "z-index": "70",
+                    "transition": "117ms all"
+                },
                 // EditorMenuContainer & EditorScrollers
                 ".LevelEditor .EditorMenuContainer": {
                     "position": "absolute",
@@ -2217,6 +2304,9 @@ module LevelEditr {
                 },
                 ".EditorScrollerLeft": {
                     "left": "0"
+                },
+                ".LevelEditor.minimized .EditorGui": {
+                    "width": "117px"
                 },
                 ".LevelEditor.minimized .EditorMenuContainer": {
                     "width": "117px"
