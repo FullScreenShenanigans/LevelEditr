@@ -8,7 +8,7 @@
 // @echo '/// <reference path="PixelDrawr-0.2.0.ts" />'
 // @echo '/// <reference path="PixelRendr-0.2.0.ts" />'
 // @echo '/// <reference path="QuadsKeepr-0.2.1.ts" />'
-// @echo '/// <reference path="StatsHoldr-0.2.1.ts" />'
+// @echo '/// <reference path="ItemsHoldr-0.2.1.ts" />'
 // @echo '/// <reference path="StringFilr-0.2.1.ts" />'
 // @echo '/// <reference path="TimeHandlr-0.2.0.ts" />'
 
@@ -23,7 +23,7 @@
 /// <reference path="References/PixelDrawr-0.2.0.ts" />
 /// <reference path="References/PixelRendr-0.2.0.ts" />
 /// <reference path="References/QuadsKeepr-0.2.1.ts" />
-/// <reference path="References/StatsHoldr-0.2.1.ts" />
+/// <reference path="References/ItemsHoldr-0.2.1.ts" />
 /// <reference path="References/StringFilr-0.2.1.ts" />
 /// <reference path="References/TimeHandlr-0.2.0.ts" />
 /// <reference path="LevelEditr.d.ts" />
@@ -720,7 +720,7 @@ module LevelEditr {
                 map.name = name;
                 this.display.namer.value = name;
                 this.setTextareaValue(this.stringifySmart(map), true);
-                this.GameStarter.StatsHolder.setItem("world", name);
+                this.GameStarter.ItemsHolder.setItem("world", name);
             }
         }
 
@@ -748,7 +748,7 @@ module LevelEditr {
             }
 
             this.setTextareaValue(this.stringifySmart(map), true);
-            this.GameStarter.StatsHolder.setItem("time", time);
+            this.GameStarter.ItemsHolder.setItem("time", time);
             this.GameStarter.TimeHandler.cancelAllEvents();
         }
 
@@ -2063,7 +2063,7 @@ module LevelEditr {
                 }
             }
 
-            this.GameStarter.StatsHolder.setItem("time", Infinity);
+            this.GameStarter.ItemsHolder.setItem("time", Infinity);
         }
 
         /**

@@ -7,7 +7,7 @@ declare module LevelEditr {
         MapsHandler: MapsHandlr.IMapsHandlr;
         ObjectMaker: ObjectMakr.IObjectMakr;
         PixelDrawer: PixelDrawr.IPixelDrawr;
-        StatsHolder: StatsHoldr.IStatsHoldr;
+        ItemsHolder: ItemsHoldr.IItemsHoldr;
         TimeHandler: TimeHandlr.ITimeHandlr;
         player: IThing;
         container: HTMLDivElement;
