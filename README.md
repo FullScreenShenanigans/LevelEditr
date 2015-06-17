@@ -1,6 +1,6 @@
 # LevelEditr [![Build Status](https://travis-ci.org/FullScreenShenanigans/LevelEditr.svg?branch=master)](https://travis-ci.org/FullScreenShenanigans/LevelEditr)
 
-To be filled out...
+A level editor designed to work natively on top of an existing GameStartr sub-class.
 
 
 ## Build Process
