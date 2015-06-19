@@ -314,6 +314,13 @@ module LevelEditr {
             return this.keyUndefined;
         }
 
+        /**
+         * 
+         */
+        getCanClick(): boolean {
+            return this.canClick;
+        }
+
         /* State resets
         */
 
@@ -575,10 +582,23 @@ module LevelEditr {
         }
 
         /**
+         * Temporarily disables this.canClick, so double clicking doesn't happen.
+         */
+        private afterClick(): void {
+            this.canClick = false;
+
+            setTimeout(
+                function (): void {
+                    this.canClick = true;
+                },
+                70);
+        }
+
+        /**
          * 
          */
         private onClickEditingThing(event: MouseEvent): void {
-            if (this.currentMode !== "Build") {
+            if (!this.canClick || this.currentMode !== "Build") {
                 return;
             }
 
@@ -596,7 +616,7 @@ module LevelEditr {
          * 
          */
         private onClickEditingMacro(event: MouseEvent): void {
-            if (this.currentMode !== "Build") {
+            if (!this.canClick || this.currentMode !== "Build") {
                 return;
             }
 
@@ -1131,7 +1151,8 @@ module LevelEditr {
 
         private resetDisplayGui(): void {
             this.display.gui = this.GameStarter.createElement("div", {
-                "className": "EditorGui"
+                "className": "EditorGui",
+                "onclick": this.afterClick.bind(this)
             });
 
             this.display.container.appendChild(this.display.gui);
