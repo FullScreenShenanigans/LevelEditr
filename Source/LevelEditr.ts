@@ -149,7 +149,12 @@ module LevelEditr {
         private keyUndefined: string;
 
         /**
-         * 
+         * Whether clicking to place a Thing or macro is currently allowed.
+         */
+        private canClick: boolean;
+
+        /**
+         * @param {ILevelEditrSettings} settings
          */
         constructor(settings: ILevelEditrSettings) {
             this.GameStarter = settings.GameStarter;
@@ -169,6 +174,7 @@ module LevelEditr {
             this.currentPreThings = [];
             this.currentMode = "Build";
             this.currentClickMode = "Thing";
+            this.canClick = true;
         }
 
 
@@ -2104,6 +2110,9 @@ module LevelEditr {
                     });
                 }
             }
+
+            // Helps prevent triggers such as Bowser jumping
+            this.GameStarter.player.dead = true;
 
             this.GameStarter.ItemsHolder.setItem("time", Infinity);
         }

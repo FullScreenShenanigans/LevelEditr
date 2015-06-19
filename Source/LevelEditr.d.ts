@@ -9,7 +9,7 @@ declare module LevelEditr {
         PixelDrawer: PixelDrawr.IPixelDrawr;
         ItemsHolder: ItemsHoldr.IItemsHoldr;
         TimeHandler: TimeHandlr.ITimeHandlr;
-        player: IThing;
+        player: IPlayer;
         container: HTMLDivElement;
         unitsize: number;
         addPageStyles(styles: any): void;
@@ -37,6 +37,10 @@ declare module LevelEditr {
         width: number;
         height: number;
         outerok: boolean;
+    }
+
+    export interface IPlayer extends IThing {
+        dead: boolean;
     }
 
     export interface IPreThing {
