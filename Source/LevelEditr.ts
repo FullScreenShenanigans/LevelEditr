@@ -432,6 +432,13 @@ module LevelEditr {
             this.display.inputDummy.click();
         }
 
+        /**
+         * 
+         */
+        beautify(text: string): string {
+            return this.beautifier(text);
+        }
+
 
         /* Interactivity
         */

@@ -158,6 +158,7 @@ declare module LevelEditr {
         downloadCurrentJSON(): void;
         setCurrentJSON(json: string): void;
         loadCurrentJSON(): void;
+        beautify(text: string): string;
         handleUploadCompletion(event: IDataProgressEvent): void;
     }
 }
