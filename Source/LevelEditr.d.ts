@@ -1,5 +1,6 @@
 declare module LevelEditr {
     export interface IGameStartr {
+        settings: any;
         GroupHolder: GroupHoldr.IGroupHoldr;
         InputWriter: InputWritr.IInputWritr;
         MapsCreator: MapsCreatr.IMapsCreatr;
@@ -11,6 +12,7 @@ declare module LevelEditr {
         TimeHandler: TimeHandlr.ITimeHandlr;
         player: IPlayer;
         container: HTMLDivElement;
+        scale: number;
         unitsize: number;
         addPageStyles(styles: any): void;
         addThing(thing: IThing, x?: number, y?: number): IThing;
@@ -29,6 +31,7 @@ declare module LevelEditr {
         setMap(name: string, location?: string): void;
         setRight(thing: IThing, right: number): void;
         setTop(thing: IThing, top: number): void;
+        shiftHoriz(thing: IThing, dx: number, notChanged?: boolean): void;
         proliferate(recipient: any, donor: any, noOverride?: boolean): any;
         scrollWindow(x: number): void;
     }
@@ -36,7 +39,8 @@ declare module LevelEditr {
     export interface IThing extends PixelDrawr.IThing, MapsCreatr.IThing {
         width: number;
         height: number;
-        outerok: boolean;
+        left: number;
+        outerok: boolean | number;
     }
 
     export interface IPlayer extends IThing {
@@ -53,6 +57,24 @@ declare module LevelEditr {
         bottom?: number;
         left?: number;
         reference?: any;
+    }
+
+    export interface IPreThingDescriptor {
+        offsetTop?: number;
+        offsetLeft?: number;
+        width?: IPreThingDimensionDescriptor;
+        height?: IPreThingDimensionDescriptor;
+        options?: {
+            [i: string]: IPreThingDimensionDescriptor;
+        };
+    }
+
+    export interface IPreThingDimensionDescriptor {
+        type?: string;
+        value?: any;
+        Infinite?: any;
+        mod?: number;
+        real?: number;
     }
 
     export interface IPreThingHolder {
@@ -107,7 +129,6 @@ declare module LevelEditr {
                 "container": HTMLDivElement;
                 "Things": HTMLDivElement;
                 "Macros": HTMLDivElement;
-                "VisualSummary": HTMLDivElement;
                 "VisualOptions": HTMLDivElement;
             };
             "MapSettings": {
@@ -139,19 +160,20 @@ declare module LevelEditr {
         GameStarter: IGameStartr;
         prethings: { [i: string]: IPreThing[] };
         thingGroups: string[];
-        thingKeys: string[];
+        things: { [i: string]: IThing };
         macros: { [i: string]: MapsCreatr.IMapsCreatrMacro };
         beautifier: (text: string) => string;
         mapNameDefault?: string;
         mapTimeDefault?: number;
         mapSettingDefault?: string;
-        mapEntryDefault?: string;
+        mapEntrances?: string[];
         mapDefault?: IMapsCreatrMapRaw;
         blocksize?: number;
         keyUndefined?: string;
     }
 
     export interface ILevelEditr {
+        getEnabled(): boolean;
         enable(): void;
         disable(): void;
         minimize(): void;
