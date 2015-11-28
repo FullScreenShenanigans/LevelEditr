@@ -1636,7 +1636,8 @@ module LevelEditr {
          */
         private resetDisplayOptionsListSubOptionsThings(): void {
             var scope: LevelEditr = this,
-                // Without clicker, tslint complaints onThingIconClick isn't used...
+                // Without these references, tslint complaints the private functions aren't used
+                argumentGetter: any = this.getPrethingSizeArguments.bind(this),
                 clicker: any = this.onThingIconClick;
 
             if (this.display.sections.ClickToPlace.Things) {
@@ -1657,7 +1658,7 @@ module LevelEditr {
                                         var prething: IPreThing = prethings[title],
                                             thing: IThing = scope.GameStarter.ObjectMaker.make(
                                                 title,
-                                                scope.getPrethingSizeArguments(prething)),
+                                                argumentGetter(prething)),
                                             container: HTMLDivElement = <HTMLDivElement>scope.GameStarter.createElement("div", {
                                                 "className": "EditorListOption",
                                                 "options": scope.prethings[key][title].options,
@@ -2287,7 +2288,7 @@ module LevelEditr {
 
             this.GameStarter.TimeHandler.cancelAllEvents();
         }
-        
+
         /**
          *
          */
@@ -2776,7 +2777,7 @@ module LevelEditr {
                     "transition": "117ms opacity, 70ms left"
                 },
                 ".LevelEditor.thin .EditorVisualOptions": {
-                    "left": "185px",
+                    "left": "185px"
                 },
                 ".LevelEditor.thin .EditorVisualOptions:hover": {
                     "left": "70px",
