@@ -5,7 +5,7 @@ declare module LevelEditr {
         InputWriter: InputWritr.IInputWritr;
         MapsCreator: MapsCreatr.IMapsCreatr;
         MapScreener: MapScreenr.IMapScreenr;
-        MapsHandler: MapsHandlr.IMapsHandlr;
+        AreaSpawner: AreaSpawnr.IAreaSpawnr;
         ObjectMaker: ObjectMakr.IObjectMakr;
         PixelDrawer: PixelDrawr.IPixelDrawr;
         ItemsHolder: ItemsHoldr.IItemsHoldr;
@@ -47,16 +47,10 @@ declare module LevelEditr {
         dead: boolean;
     }
 
-    export interface IPreThing {
+    export interface IPreThing extends MapsCreatr.IPreThing {
         thing: IThing;
         xloc: number;
         yloc: number;
-        title?: string;
-        top?: number;
-        right?: number;
-        bottom?: number;
-        left?: number;
-        reference?: any;
     }
 
     export interface IPreThingDescriptor {
@@ -77,15 +71,11 @@ declare module LevelEditr {
         real?: number;
     }
 
-    export interface IPreThingHolder {
-        [i: string]: IPreThing[];
-    }
-
     export interface IMapsCreatrMapRaw extends MapsCreatr.IMapsCreatrMapRaw {
         time: number;
         areas: {
             [i: string]: IMapsCreatrAreaRaw;
-        }
+        };
     }
 
     export interface IMapsCreatrAreaRaw extends MapsCreatr.IMapsCreatrAreaRaw {
@@ -153,7 +143,7 @@ declare module LevelEditr {
                 "MapSettings": HTMLDivElement;
                 "JSON": HTMLDivElement;
             }
-        }
+        };
     }
 
     export interface ILevelEditrSettings {

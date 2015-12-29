@@ -1,9 +1,9 @@
+// @echo '/// <reference path="AreaSpawnr-0.2.0.ts" />'
 // @echo '/// <reference path="ChangeLinr-0.2.0.ts" />'
 // @echo '/// <reference path="GroupHoldr-0.2.1.ts" />'
 // @echo '/// <reference path="InputWritr-0.2.0.ts" />'
 // @echo '/// <reference path="MapsCreatr-0.2.1.ts" />'
 // @echo '/// <reference path="MapScreenr-0.2.1.ts" />'
-// @echo '/// <reference path="MapsHandlr-0.2.0.ts" />'
 // @echo '/// <reference path="ObjectMakr-0.2.2.ts" />'
 // @echo '/// <reference path="PixelDrawr-0.2.0.ts" />'
 // @echo '/// <reference path="PixelRendr-0.2.0.ts" />'
@@ -13,12 +13,12 @@
 // @echo '/// <reference path="TimeHandlr-0.2.0.ts" />'
 
 // @ifdef INCLUDE_DEFINITIONS
+/// <reference path="References/AreaSpawnr-0.2.0.ts" />
 /// <reference path="References/ChangeLinr-0.2.0.ts" />
 /// <reference path="References/GroupHoldr-0.2.1.ts" />
 /// <reference path="References/InputWritr-0.2.0.ts" />
 /// <reference path="References/MapsCreatr-0.2.1.ts" />
 /// <reference path="References/MapScreenr-0.2.1.ts" />
-/// <reference path="References/MapsHandlr-0.2.0.ts" />
 /// <reference path="References/ObjectMakr-0.2.2.ts" />
 /// <reference path="References/PixelDrawr-0.2.0.ts" />
 /// <reference path="References/PixelRendr-0.2.0.ts" />
@@ -359,7 +359,7 @@ module LevelEditr {
             this.enabled = true;
 
             this.oldInformation = {
-                "map": this.GameStarter.MapsHandler.getMapName()
+                "map": this.GameStarter.AreaSpawner.getMapName()
             };
 
             this.clearAllThings();
@@ -517,7 +517,13 @@ module LevelEditr {
          */
         private setCurrentThing(title: string, x: number = 0, y: number = 0): void {
             var args: any = this.generateCurrentArgs(),
-                description: IPreThingDescriptor = this.things[title];
+                description: IPreThingDescriptor = this.things[title],
+                reference: MapsCreatr.IPreThingSettings = this.GameStarter.proliferate(
+                    {
+                        "outerok": 2
+                    },
+                    this.getNormalizedThingArguments(args)),
+                thing: IThing = this.GameStarter.ObjectMaker.make(this.currentTitle, reference);
 
             this.clearCurrentThings();
 
@@ -527,15 +533,14 @@ module LevelEditr {
                 {
                     "xloc": 0,
                     "yloc": 0,
-                    "left": description.offsetLeft || 0,
                     "top": -description.offsetTop || 0,
-                    "thing": this.GameStarter.ObjectMaker.make(
-                        this.currentTitle,
-                        this.GameStarter.proliferate(
-                            {
-                                "outerok": 2
-                            },
-                            this.getNormalizedThingArguments(args)))
+                    "right": (description.offsetLeft) + thing.width * this.GameStarter.unitsize,
+                    "bottom": (-description.offsetTop || 0) + thing.height * this.GameStarter.unitsize,
+                    "left": description.offsetLeft || 0,
+                    "title": this.currentTitle,
+                    "reference": reference,
+                    "thing": thing,
+                    "spawned": true
                 }
             ];
 
@@ -805,8 +810,8 @@ module LevelEditr {
         /**
          * 
          */
-        private createPrethingsHolder(prethings: IPreThing[]): IPreThingHolder {
-            var output: IPreThingHolder = {};
+        private createPrethingsHolder(prethings: IPreThing[]): MapsCreatr.IPreThingsRawContainer {
+            var output: MapsCreatr.IPreThingsRawContainer = {};
 
             this.thingGroups.forEach(function (group: string): void {
                 output[group] = prethings;
@@ -2275,7 +2280,7 @@ module LevelEditr {
          */
         private disableAllThings(): void {
             var scope: LevelEditr = this,
-                groups: GroupHoldr.IGroupHoldrGroups = this.GameStarter.GroupHolder.getGroups(),
+                groups: GroupHoldr.IGroupHoldrGroups<IThing> = this.GameStarter.GroupHolder.getGroups(),
                 i: string;
 
             for (i in groups) {
@@ -2311,7 +2316,7 @@ module LevelEditr {
          */
         private clearAllThings(): void {
             var scope: LevelEditr = this,
-                groups: GroupHoldr.IGroupHoldrGroups = this.GameStarter.GroupHolder.getGroups(),
+                groups: GroupHoldr.IGroupHoldrGroups<IThing> = this.GameStarter.GroupHolder.getGroups(),
                 i: string;
 
             for (i in groups) {
