@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/FullScreenShenanigans/LevelEditr.svg?branch=master)](https://travis-ci.org/FullScreenShenanigans/LevelEditr)
 [![NPM version](https://badge.fury.io/js/leveleditr.svg)](http://badge.fury.io/js/leveleditr)
 
-An audio playback manager for persistent and on-demand themes and sounds.
+GUI-based level creation & editing for GameStartr.
 
 
 ## Build Process

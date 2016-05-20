@@ -1,21 +1,23 @@
+/* tslint:disable */
+
+/// <reference path="../typings/areaspawnr/AreaSpawnr.d.ts" />
 /// <reference path="../typings/groupholdr/GroupHoldr.d.ts" />
 /// <reference path="../typings/inputwritr/InputWritr.d.ts" />
 /// <reference path="../typings/mapscreatr/MapsCreatr.d.ts" />
 /// <reference path="../typings/mapscreenr/MapScreenr.d.ts" />
-/// <reference path="../typings/areaspawnr/AreaSpawnr.d.ts" />
 /// <reference path="../typings/objectmakr/ObjectMakr.d.ts" />
 /// <reference path="../typings/pixeldrawr/PixelDrawr.d.ts" />
 /// <reference path="../typings/itemsholdr/ItemsHoldr.d.ts" />
 /// <reference path="../typings/timehandlr/TimeHandlr.d.ts" />
 
+import { IAreaSpawnr } from "IAreaSpawnr";
 import { IGroupHoldr, IGroups } from "IGroupHoldr";
 import { IInputWritr } from "IInputWritr";
 import { ILocationRaw, IMacro, IMap, IMapsCreatr, IPreThingsRawContainer } from "IMapsCreatr";
-import { IPreThingSettings } from "IPreThing";
 import { IMapScreenr } from "IMapScreenr";
-import { IAreaSpawnr } from "IAreaSpawnr";
 import { IObjectMakr } from "IObjectMakr";
 import { IPixelDrawr } from "IPixelDrawr";
+import { IPreThingSettings } from "IPreThing";
 import { IItemsHoldr } from "IItemsHoldr";
 import { ITimeHandlr } from "ITimeHandlr";
 import {
@@ -24,8 +26,7 @@ import {
 } from "./ILevelEditr";
 
 /**
- * A level editor designed to work natively on top of an existing GameStartr
- * sub-class.
+ * GUI-based level creation & editing for GameStartr.
  */
 export class LevelEditr implements ILevelEditr {
     /**
@@ -2847,3 +2848,5 @@ export class LevelEditr implements ILevelEditr {
         };
     }
 }
+
+/* tslint:enable */

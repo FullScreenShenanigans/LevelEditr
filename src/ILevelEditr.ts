@@ -1,7 +1,7 @@
+/// <reference path="../typings/mapscreenr/MapScreenr.d.ts" />
 /// <reference path="../typings/groupholdr/GroupHoldr.d.ts" />
 /// <reference path="../typings/inputwritr/InputWritr.d.ts" />
 /// <reference path="../typings/mapscreatr/MapsCreatr.d.ts" />
-/// <reference path="../typings/mapscreenr/MapScreenr.d.ts" />
 /// <reference path="../typings/areaspawnr/AreaSpawnr.d.ts" />
 /// <reference path="../typings/objectmakr/ObjectMakr.d.ts" />
 /// <reference path="../typings/pixeldrawr/PixelDrawr.d.ts" />
@@ -14,9 +14,9 @@ import { IItemsHoldr } from "IItemsHoldr";
 import { IInputWritr } from "IInputWritr";
 import { IAreaRaw as IMapsCreatrAreaRaw, IMacro, IMapsCreatr, IThing as IMapsCreatrIThing, IMapRaw as IMapsCreatrMapRaw } from "IMapsCreatr";
 import { IMapScreenr } from "IMapScreenr";
-import { IPreThing as IMapsCreatrIPreThing } from "IPreThing";
 import { IObjectMakr } from "IObjectMakr";
 import { IPixelDrawr, IThing as IPixelDrawrIThing } from "IPixelDrawr";
+import { IPreThing as IMapsCreatrIPreThing } from "IPreThing";
 import { ITimeHandlr } from "ITimeHandlr";
 
 export interface IGameStartr {
@@ -183,6 +183,9 @@ export interface ILevelEditrSettings {
     keyUndefined?: string;
 }
 
+/**
+ * GUI-based level creation & editing for GameStartr.
+ */
 export interface ILevelEditr {
     getEnabled(): boolean;
     enable(): void;

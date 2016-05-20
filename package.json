@@ -1,6 +1,6 @@
 {
   "name": "leveleditr",
-  "description": "???????",
+  "description": "GUI-based level creation & editing for GameStartr.",
   "version": "0.4.0",
   "author": {
     "name": "Josh Goldberg",
@@ -28,6 +28,14 @@
     "typescript": "^1.8.10"
   },
   "dependencies": {
-    "itemsholdr": "^0.4.2"
+    "areaspawnr": "^0.4.0",
+    "groupholdr": "^0.4.0",
+    "inputwritr": "^0.4.2",
+    "itemsholdr": "^0.4.2",
+    "mapscreatr": "^0.4.1",
+    "mapscreenr": "^0.4.1",
+    "objectmakr": "^0.4.2",
+    "pixeldrawr": "^0.4.0",
+    "timehandlr": "^0.4.2"
   }
 }
