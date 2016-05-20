@@ -10,7 +10,8 @@
 
 import { IGroupHoldr, IGroups } from "IGroupHoldr";
 import { IInputWritr } from "IInputWritr";
-import { ILocationRaw, IMacro, IMap, IMapsCreatr, IPreThingSettings, IPreThingsRawContainer } from "IMapsCreatr";
+import { ILocationRaw, IMacro, IMap, IMapsCreatr, IPreThingsRawContainer } from "IMapsCreatr";
+import { IPreThingSettings } from "IPreThing";
 import { IMapScreenr } from "IMapScreenr";
 import { IAreaSpawnr } from "IAreaSpawnr";
 import { IObjectMakr } from "IObjectMakr";
