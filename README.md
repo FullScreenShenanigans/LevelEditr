@@ -1,37 +1,25 @@
-# LevelEditr [![Build Status](https://travis-ci.org/FullScreenShenanigans/LevelEditr.svg?branch=master)](https://travis-ci.org/FullScreenShenanigans/LevelEditr)
+# LevelEditr
+[![Build Status](https://travis-ci.org/FullScreenShenanigans/LevelEditr.svg?branch=master)](https://travis-ci.org/FullScreenShenanigans/LevelEditr)
+[![NPM version](https://badge.fury.io/js/leveleditr.svg)](http://badge.fury.io/js/leveleditr)
 
-A level editor designed to work natively on top of an existing GameStartr sub-class.
+GUI-based level creation & editing for GameStartr.
 
 
 ## Build Process
 
-LevelEditr uses [Grunt](http://gruntjs.com/) to automate building, which 
-requires [Node.js](http://node.js.org). The process is straightforward; see 
-[Grunt's help page](http://gruntjs.com/getting-started) for more info.
+LevelEditr uses [Gulp](http://gulpjs.com/) to automate building, which requires [Node.js](http://node.js.org).
 
-To build from scratch, install NodeJS, and run the following commands:
+To build from scratch, install NodeJS and run the following commands:
 
 ```
 npm install
-grunt
+gulp
 ```
 
+### Individual Gulp tasks
 
-## Basic Architecture
-
-#### Important APIs
-
-To be filled out...
-
-#### Important Member Variables
-
-To be filled out...
-
-#### Constructor Arguments
-
-To be filled out...
-
-
-## Sample Usage
-
-To be filled out...
+* `gulp dist` - Compiles the source into `dist/`. 
+* `gulp tsc` - Runs the [TypeScript](https://typescriptlang.org/) compiler.
+* `gulp tslint` - Runs [TSLint](https://github.com/palantir/tslint).
+* `gulp test` - Runs tests in `tests/`. 
+* `gulp watch` - Runs the `tsc` and `tslint` tasks when a source file changes.
