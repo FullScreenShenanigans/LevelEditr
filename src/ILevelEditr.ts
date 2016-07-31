@@ -1,35 +1,24 @@
-/// <reference path="../typings/mapscreenr/MapScreenr.d.ts" />
-/// <reference path="../typings/groupholdr/GroupHoldr.d.ts" />
-/// <reference path="../typings/inputwritr/InputWritr.d.ts" />
-/// <reference path="../typings/mapscreatr/MapsCreatr.d.ts" />
-/// <reference path="../typings/areaspawnr/AreaSpawnr.d.ts" />
-/// <reference path="../typings/objectmakr/ObjectMakr.d.ts" />
-/// <reference path="../typings/pixeldrawr/PixelDrawr.d.ts" />
-/// <reference path="../typings/itemsholdr/ItemsHoldr.d.ts" />
-/// <reference path="../typings/timehandlr/TimeHandlr.d.ts" />
-
-import { IAreaSpawnr } from "IAreaSpawnr";
-import { IGroupHoldr } from "IGroupHoldr";
-import { IItemsHoldr } from "IItemsHoldr";
-import { IInputWritr } from "IInputWritr";
-import { IAreaRaw as IMapsCreatrAreaRaw, IMacro, IMapsCreatr, IThing as IMapsCreatrIThing, IMapRaw as IMapsCreatrMapRaw } from "IMapsCreatr";
-import { IMapScreenr } from "IMapScreenr";
-import { IObjectMakr } from "IObjectMakr";
-import { IPixelDrawr, IThing as IPixelDrawrIThing } from "IPixelDrawr";
-import { IPreThing as IMapsCreatrIPreThing } from "IPreThing";
-import { ITimeHandlr } from "ITimeHandlr";
+/// <reference path="../typings/MapScreenr.d.ts" />
+/// <reference path="../typings/GroupHoldr.d.ts" />
+/// <reference path="../typings/InputWritr.d.ts" />
+/// <reference path="../typings/MapsCreatr.d.ts" />
+/// <reference path="../typings/AreaSpawnr.d.ts" />
+/// <reference path="../typings/ObjectMakr.d.ts" />
+/// <reference path="../typings/PixelDrawr.d.ts" />
+/// <reference path="../typings/ItemsHoldr.d.ts" />
+/// <reference path="../typings/TimeHandlr.d.ts" />
 
 export interface IGameStartr {
     settings: any;
-    GroupHolder: IGroupHoldr;
-    InputWriter: IInputWritr;
-    MapsCreator: IMapsCreatr;
-    MapScreener: IMapScreenr;
-    AreaSpawner: IAreaSpawnr;
-    ObjectMaker: IObjectMakr;
-    PixelDrawer: IPixelDrawr;
-    ItemsHolder: IItemsHoldr;
-    TimeHandler: ITimeHandlr;
+    GroupHolder: GroupHoldr.IGroupHoldr;
+    InputWriter: InputWritr.IInputWritr;
+    MapsCreator: MapsCreatr.IMapsCreatr;
+    MapScreener: MapScreenr.IMapScreenr;
+    AreaSpawner: AreaSpawnr.IAreaSpawnr;
+    ObjectMaker: ObjectMakr.IObjectMakr;
+    PixelDrawer: PixelDrawr.IPixelDrawr;
+    ItemsHolder: ItemsHoldr.IItemsHoldr;
+    TimeHandler: TimeHandlr.ITimeHandlr;
     player: IPlayer;
     container: HTMLDivElement;
     scale: number;
@@ -56,7 +45,7 @@ export interface IGameStartr {
     scrollWindow(x: number): void;
 }
 
-export interface IThing extends IPixelDrawrIThing, IMapsCreatrIThing {
+export interface IThing extends PixelDrawr.IThing, MapsCreatr.IThing {
     width: number;
     height: number;
     left: number;
@@ -68,7 +57,7 @@ export interface IPlayer extends IThing {
     dead: boolean;
 }
 
-export interface IPreThing extends IMapsCreatrIPreThing {
+export interface IPreThing extends MapsCreatr.IPreThing {
     thing: IThing;
     xloc: number;
     yloc: number;
@@ -92,14 +81,15 @@ export interface IPreThingDimensionDescriptor {
     real?: number;
 }
 
-export interface IMapRaw extends IMapsCreatrMapRaw {
+export interface IMapRaw extends MapsCreatr.IMapRaw {
     time: number;
     areas: {
+        [i: number]: IAreaRaw;
         [i: string]: IAreaRaw;
     };
 }
 
-export interface IAreaRaw extends IMapsCreatrAreaRaw {
+export interface IAreaRaw extends MapsCreatr.IAreaRaw {
     setting?: string;
 }
 
@@ -172,7 +162,7 @@ export interface ILevelEditrSettings {
     prethings: { [i: string]: IPreThing[] };
     thingGroups: string[];
     things: { [i: string]: IThing };
-    macros: { [i: string]: IMacro };
+    macros: { [i: string]: MapsCreatr.IMacro };
     beautifier: (text: string) => string;
     mapNameDefault?: string;
     mapTimeDefault?: number;

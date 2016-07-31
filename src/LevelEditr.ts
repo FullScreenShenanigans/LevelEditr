@@ -1,25 +1,15 @@
 /* tslint:disable */
 
-/// <reference path="../typings/areaspawnr/AreaSpawnr.d.ts" />
-/// <reference path="../typings/groupholdr/GroupHoldr.d.ts" />
-/// <reference path="../typings/inputwritr/InputWritr.d.ts" />
-/// <reference path="../typings/mapscreatr/MapsCreatr.d.ts" />
-/// <reference path="../typings/mapscreenr/MapScreenr.d.ts" />
-/// <reference path="../typings/objectmakr/ObjectMakr.d.ts" />
-/// <reference path="../typings/pixeldrawr/PixelDrawr.d.ts" />
-/// <reference path="../typings/itemsholdr/ItemsHoldr.d.ts" />
-/// <reference path="../typings/timehandlr/TimeHandlr.d.ts" />
+/// <reference path="../typings/AreaSpawnr.d.ts" />
+/// <reference path="../typings/GroupHoldr.d.ts" />
+/// <reference path="../typings/InputWritr.d.ts" />
+/// <reference path="../typings/MapsCreatr.d.ts" />
+/// <reference path="../typings/MapScreenr.d.ts" />
+/// <reference path="../typings/ObjectMakr.d.ts" />
+/// <reference path="../typings/PixelDrawr.d.ts" />
+/// <reference path="../typings/ItemsHoldr.d.ts" />
+/// <reference path="../typings/TimeHandlr.d.ts" />
 
-import { IAreaSpawnr } from "IAreaSpawnr";
-import { IGroupHoldr, IGroups } from "IGroupHoldr";
-import { IInputWritr } from "IInputWritr";
-import { ILocationRaw, IMacro, IMap, IMapsCreatr, IPreThingsRawContainer } from "IMapsCreatr";
-import { IMapScreenr } from "IMapScreenr";
-import { IObjectMakr } from "IObjectMakr";
-import { IPixelDrawr } from "IPixelDrawr";
-import { IPreThingSettings } from "IPreThing";
-import { IItemsHoldr } from "IItemsHoldr";
-import { ITimeHandlr } from "ITimeHandlr";
 import {
     IAreaRaw, IDataMouseEvent, IDataProgressEvent, IDisplayContainer, IGameStartr, ILevelEditr, ILevelEditrSettings, IMapRaw,
     IPreThing, IPreThingDescriptor, IPreThingDimensionDescriptor, IThing, IThingIcon
@@ -67,7 +57,7 @@ export class LevelEditr implements ILevelEditr {
      * The listings of macros that the GUI display
      */
     private macros: {
-        [i: string]: IMacro;
+        [i: string]: MapsCreatr.IMacro;
     };
 
     /**
@@ -241,7 +231,7 @@ export class LevelEditr implements ILevelEditr {
     /**
      * 
      */
-    getMacros(): { [i: string]: IMacro } {
+    getMacros(): { [i: string]: MapsCreatr.IMacro } {
         return this.macros;
     }
 
@@ -508,7 +498,7 @@ export class LevelEditr implements ILevelEditr {
     private setCurrentThing(title: string, x: number = 0, y: number = 0): void {
         var args: any = this.generateCurrentArgs(),
             description: IPreThingDescriptor = this.things[title],
-            reference: IPreThingSettings = this.GameStarter.proliferate(
+            reference: MapsCreatr.IPreThingSettings = this.GameStarter.proliferate(
                 {
                     "outerok": 2
                 },
@@ -800,8 +790,8 @@ export class LevelEditr implements ILevelEditr {
     /**
      * 
      */
-    private createPrethingsHolder(prethings: IPreThing[]): IPreThingsRawContainer {
-        var output: IPreThingsRawContainer = {};
+    private createPrethingsHolder(prethings: IPreThing[]): MapsCreatr.IPreThingsRawContainer {
+        var output: MapsCreatr.IPreThingsRawContainer = {};
 
         this.thingGroups.forEach(function (group: string): void {
             output[group] = prethings;
@@ -947,7 +937,7 @@ export class LevelEditr implements ILevelEditr {
      */
     private setLocationArea(): void {
         var map: IMapRaw = this.getMapObject(),
-            location: ILocationRaw;
+            location: MapsCreatr.ILocationRaw;
 
         if (!map) {
             return;
@@ -969,7 +959,7 @@ export class LevelEditr implements ILevelEditr {
      */
     private setMapEntry(fromGui: boolean): void {
         var map: IMapRaw = this.getMapObject(),
-            location: ILocationRaw,
+            location: MapsCreatr.ILocationRaw,
             entry: string;
 
         if (!map) {
@@ -994,7 +984,7 @@ export class LevelEditr implements ILevelEditr {
      */
     private setCurrentLocation(): void {
         var map: IMapRaw = this.getMapObject(),
-            location: ILocationRaw;
+            location: MapsCreatr.ILocationRaw;
 
         if (!map) {
             return;
@@ -1143,7 +1133,7 @@ export class LevelEditr implements ILevelEditr {
     /**
      * 
      */
-    private getCurrentLocationObject(map: IMapRaw): ILocationRaw {
+    private getCurrentLocationObject(map: IMapRaw): MapsCreatr.ILocationRaw {
         return map.locations[this.getCurrentLocation()];
     }
 
@@ -2156,7 +2146,7 @@ export class LevelEditr implements ILevelEditr {
         var value: string = this.display.stringer.textarea.value,
             mapName: string = this.getMapName(),
             testObject: any,
-            map: IMap;
+            map: MapsCreatr.IMap;
 
         try {
             testObject = this.parseSmart(value);
@@ -2266,7 +2256,7 @@ export class LevelEditr implements ILevelEditr {
      */
     private disableAllThings(): void {
         var scope: LevelEditr = this,
-            groups: IGroups<IThing> = this.GameStarter.GroupHolder.getGroups(),
+            groups: GroupHoldr.IGroups<IThing> = this.GameStarter.GroupHolder.getGroups(),
             i: string;
 
         for (i in groups) {
@@ -2302,7 +2292,7 @@ export class LevelEditr implements ILevelEditr {
      */
     private clearAllThings(): void {
         var scope: LevelEditr = this,
-            groups: IGroups<IThing> = this.GameStarter.GroupHolder.getGroups(),
+            groups: GroupHoldr.IGroups<IThing> = this.GameStarter.GroupHolder.getGroups(),
             i: string;
 
         for (i in groups) {
