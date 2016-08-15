@@ -86,6 +86,8 @@ export interface IMapRaw extends MapsCreatr.IMapRaw {
         [i: number]: IAreaRaw;
         [i: string]: IAreaRaw;
     };
+
+    time?: number;
 }
 
 export interface IAreaRaw extends MapsCreatr.IAreaRaw {

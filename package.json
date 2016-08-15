@@ -15,17 +15,20 @@
   },
   "license": "MIT",
   "dependencies": {
-    "areaspawnr": "^0.5.0",
-    "groupholdr": "^0.5.0",
-    "inputwritr": "^0.5.0",
-    "itemsholdr": "^0.5.0",
-    "mapscreatr": "^0.5.0",
-    "mapscreenr": "^0.5.0",
-    "objectmakr": "^0.5.0",
-    "pixeldrawr": "^0.5.0",
-    "timehandlr": "^0.5.0"
+    "areaspawnr": "^0.5.2",
+    "changelinr": "^0.5.3",
+    "groupholdr": "^0.5.1",
+    "inputwritr": "^0.5.2",
+    "itemsholdr": "^0.5.2",
+    "mapscreatr": "^0.5.2",
+    "mapscreenr": "^0.5.2",
+    "objectmakr": "^0.5.2",
+    "pixeldrawr": "^0.5.1",
+    "pixelrendr": "^0.5.2",
+    "stringfilr": "^0.5.2",
+    "timehandlr": "^0.5.2"
   },
   "devDependencies": {
-    "gulp-shenanigans": "^0.5.1"
+    "gulp-shenanigans": "^0.5.11"
   }
 }
