@@ -82,7 +82,6 @@ export interface IPreThingDimensionDescriptor {
 }
 
 export interface IMapRaw extends MapsCreatr.IMapRaw {
-    time: number;
     areas: {
         [i: number]: IAreaRaw;
         [i: string]: IAreaRaw;

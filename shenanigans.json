@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "areaspawnr": "^0.5.0",
+    "groupholdr": "^0.5.0",
+    "inputwritr": "^0.5.0",
+    "itemsholdr": "^0.5.0",
+    "mapscreatr": "^0.5.0",
+    "mapscreenr": "^0.5.0",
+    "objectmakr": "^0.5.0",
+    "pixeldrawr": "^0.5.0",
+    "timehandlr": "^0.5.0"
+  },
+  "package": {
+    "description": "GUI-based level creation & editing for GameStartr.",
+    "name": "LevelEditr",
+    "version": "0.5.1"
+  }
+}
