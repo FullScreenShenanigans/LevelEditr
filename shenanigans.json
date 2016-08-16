@@ -44,6 +44,6 @@
   "package": {
     "description": "GUI-based level creation & editing for GameStartr.",
     "name": "LevelEditr",
-    "version": "0.5.1"
+    "version": "0.5.2"
   }
 }

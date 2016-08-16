@@ -1,7 +1,7 @@
 {
   "name": "leveleditr",
   "description": "GUI-based level creation & editing for GameStartr.",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "author": {
     "name": "Josh Goldberg",
     "email": "joshuakgoldberg@outlook.com"
